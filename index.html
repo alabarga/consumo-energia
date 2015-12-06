@@ -1,0 +1,190 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="description" content="Visualización de la demanda eléctrica en las últimas horas en España">
+    <meta name="keywords" content="Design, interactive, D3, experimental, spain, energy, renewable energy, energías renovables, interactivo, infografía, visualización, experimento">
+    <meta property="og:image" content="http://energia.ningunaparte.net/imgs/captura-big.png">
+    <meta name="twitter:creator" content="@alabarga">
+    <meta name="author" content="Alberto Labarga">
+    <title>Visualización 24 últimas horas Energía Consumida España - beta </title>
+    <link rel="stylesheet" href="./css/energia-font.css">
+    <link rel="stylesheet" href="./css/d3.css">
+    <!-- For IE 9 and below. ICO should be 32x32 pixels in size -->
+    <!--[if IE]><link rel="shortcut icon" href="imgs/fav/favicon.ico"><![endif]-->
+    <!-- Touch Icons - iOS and Android 2.1+ 180x180 pixels in size. -->
+    <link rel="apple-touch-icon-precomposed" href="http://energia.ningunaparte.net/imgs/fav/apple-touch-icon-precomposed.png">
+    <!-- Firefox, Chrome, Safari, IE 11+ and Opera. 196x196 pixels in size. -->
+    <link rel="icon" href="http://energia.ningunaparte.net/imgs/fav/favicon.png">
+    
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="visualizacion__title">Generación Eléctrica España - Últimas 24 horas<sup>BETA</sup></h2>
+        <h3 class="visualizacion__subtitle">Estructura de generación</h3>
+        <section id="chart" class="chart"></section>
+        <section id="j-energias">
+            <h3 class="visualizacion__subtitle">Últimas lécturas</h3>
+            <div id="id_eol" class="energia" style="opacity: 1;">
+                <div class="energia__titulo" style="color: rgb(198, 209, 221);">Eólica</div>
+                <dl>
+                    <dt class="energia__subtitulo">Aportación actual</dt>
+                    <dd>
+                        <div class="energia__valor energia__valor--destacado j-porcentaje-eol">13,14%</div>
+                        <div class="energia__valor j-valor-eol">3.446MW</div>
+                    </dd>
+                    <dt class="energia__subtitulo">Promedio 24h</dt>
+                    <dd>
+                        <div class="energia__valor energia__valor--destacado j-porcentaje-media-eol">13,98%</div>
+                        <div class="energia__valor j-aportacion-media-eol">3.404,99MW</div>
+                    </dd>
+                    <dt class="energia__subtitulo">Emisiones CO<sub>2</sub></dt>
+                    <dd>
+                        <div class="energia__valor j-co2-eol">0,00T/h</div>
+                    </dd>
+                </dl>
+            </div>
+            <div id="id_hid" class="energia" style="opacity: 1;">
+                <div class="energia__titulo" style="color: rgb(68, 111, 164);">Hidraúlica</div>
+                <dl>
+                    <dt class="energia__subtitulo">Aportación actual</dt>
+                    <dd>
+                        <div class="energia__valor energia__valor--destacado j-porcentaje-hid">-1,33%</div>
+                        <div class="energia__valor j-valor-hid">-350MW</div>
+                    </dd>
+                    <dt class="energia__subtitulo">Promedio 24h</dt>
+                    <dd>
+                        <div class="energia__valor energia__valor--destacado j-porcentaje-media-hid">3,61%</div>
+                        <div class="energia__valor j-aportacion-media-hid">472,00MW</div>
+                    </dd>
+                    <dt class="energia__subtitulo">Emisiones CO<sub>2</sub></dt>
+                    <dd>
+                        <div class="energia__valor j-co2-hid">-0,00T/h</div>
+                    </dd>
+                </dl>
+            </div>
+            <div id="id_sol" class="energia" style="opacity: 1;">
+                <div class="energia__titulo" style="color: rgb(245, 204, 137);">Solar/Solar Térmica</div>
+                <dl>
+                    <dt class="energia__subtitulo">Aportación actual</dt>
+                    <dd>
+                        <div class="energia__valor energia__valor--destacado j-porcentaje-sol" data-source="">11,38%</div>
+                        <div class="energia__valor j-valor-sol">2.985MW</div>
+                    </dd>
+                    <dt class="energia__subtitulo">Promedio 24h</dt>
+                    <dd>
+                        <div class="energia__valor energia__valor--destacado j-porcentaje-media-sol">3,19%</div>
+                        <div class="energia__valor j-aportacion-media-sol">855,09MW</div>
+                    </dd>
+                    <dt class="energia__subtitulo">Emisiones CO<sub>2</sub></dt>
+                    <dd>
+                        <div class="energia__valor j-co2-sol">0,00T/h</div>
+                    </dd>
+                </dl>
+            </div>
+            <div id="id_aut" class="energia" style="opacity: 1;">
+                <div class="energia__titulo" style="color: rgb(189, 189, 189);">Régimen Especial</div>
+                <dl>
+                    <dt class="energia__subtitulo">Aportación actual</dt>
+                    <dd>
+                        <div class="energia__valor energia__valor--destacado j-porcentaje-aut">13,46%</div>
+                        <div class="energia__valor j-valor-aut">3.529MW</div>
+                    </dd>
+                    <dt class="energia__subtitulo">Promedio 24h</dt>
+                    <dd>
+                        <div class="energia__valor energia__valor--destacado j-porcentaje-media-aut">14,17%</div>
+                        <div class="energia__valor j-aportacion-media-aut">3.547,42MW</div>
+                    </dd>
+                    <dt class="energia__subtitulo">Emisiones CO<sub>2</sub></dt>
+                    <dd>
+                        <div class="energia__valor j-co2-aut">952,83T/h</div>
+                    </dd>
+                </dl>
+            </div>
+            <div id="id_gf" class="energia" style="opacity: 1;">
+                <div class="energia__titulo" style="color: rgb(150, 198, 221);">Gas + Fuel</div>
+                <dl>
+                    <dt class="energia__subtitulo">Aportación actual</dt>
+                    <dd>
+                        <div class="energia__valor energia__valor--destacado j-porcentaje-gf">0,00%</div>
+                        <div class="energia__valor j-valor-gf">0MW</div>
+                    </dd>
+                    <dt class="energia__subtitulo">Promedio 24h</dt>
+                    <dd>
+                        <div class="energia__valor energia__valor--destacado j-porcentaje-media-gf">0,00%</div>
+                        <div class="energia__valor j-aportacion-media-gf">0,00MW</div>
+                    </dd>
+                    <dt class="energia__subtitulo">Emisiones CO<sub>2</sub></dt>
+                    <dd>
+                        <div class="energia__valor j-co2-gf">0,00T/h</div>
+                    </dd>
+                </dl>
+            </div>
+            <div id="id_nuc" class="energia" style="opacity: 1;">
+                <div class="energia__titulo" style="color: rgb(215, 18, 255);">Nuclear</div>
+                <dl>
+                    <dt class="energia__subtitulo">Aportación actual</dt>
+                    <dd>
+                        <div class="energia__valor energia__valor--destacado j-porcentaje-nuc">23,21%</div>
+                        <div class="energia__valor j-valor-nuc">6.085MW</div>
+                    </dd>
+                    <dt class="energia__subtitulo">Promedio 24h</dt>
+                    <dd>
+                        <div class="energia__valor energia__valor--destacado j-porcentaje-media-nuc">24,37%</div>
+                        <div class="energia__valor j-aportacion-media-nuc">6.090,44MW</div>
+                    </dd>
+                    <dt class="energia__subtitulo">Emisiones CO<sub>2</sub></dt>
+                    <dd>
+                        <div class="energia__valor j-co2-nuc">0,00T/h</div>
+                    </dd>
+                </dl>
+            </div>
+            <div id="id_car" class="energia" style="opacity: 1;">
+                <div class="energia__titulo" style="color: rgb(121, 93, 93);">Carbón</div>
+                <dl>
+                    <dt class="energia__subtitulo">Aportación actual</dt>
+                    <dd>
+                        <div class="energia__valor energia__valor--destacado j-porcentaje-car">28,41%</div>
+                        <div class="energia__valor j-valor-car">7.448MW</div>
+                    </dd>
+                    <dt class="energia__subtitulo">Promedio 24h</dt>
+                    <dd>
+                        <div class="energia__valor energia__valor--destacado j-porcentaje-media-car">29,00%</div>
+                        <div class="energia__valor j-aportacion-media-car">7.377,67MW</div>
+                    </dd>
+                    <dt class="energia__subtitulo">Emisiones CO<sub>2</sub></dt>
+                    <dd>
+                        <div class="energia__valor j-co2-car">7.075,60T/h</div>
+                    </dd>
+                </dl>
+            </div>
+            <div id="id_cc" class="energia" style="opacity: 1;">
+                <div class="energia__titulo" style="color: rgb(104, 111, 169);">Ciclo Combinado</div>
+                <dl>
+                    <dt class="energia__subtitulo">Aportación actual</dt>
+                    <dd>
+                        <div class="energia__valor energia__valor--destacado j-porcentaje-cc">10,40%</div>
+                        <div class="energia__valor j-valor-cc">2.726MW</div>
+                    </dd>
+                    <dt class="energia__subtitulo">Promedio 24h</dt>
+                    <dd>
+                        <div class="energia__valor energia__valor--destacado j-porcentaje-media-cc">14,41%</div>
+                        <div class="energia__valor j-aportacion-media-cc">3.754,72MW</div>
+                    </dd>
+                    <dt class="energia__subtitulo">Emisiones CO<sub>2</sub></dt>
+                    <dd>
+                        <div class="energia__valor j-co2-cc">1.008,62T/h</div>
+                    </dd>
+                </dl>
+            </div>
+        </section>
+        <footer>
+            <div class="credits">
+                <p class="visualizacion__subtitle">Visualización desarrollada en <a href="http://mbostock.github.com/d3/">D3.js</a>, datos publicados por <a href="http://www.ree.es/es">REE</a>.</p>
+            </div>            
+            
+        </footer>
+    </div>
+    <script src="./js/d3.v3.min.js"></script>
+    <script src="./js/script.js"></script>
+    
+</body></html>
